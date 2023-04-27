@@ -17,7 +17,8 @@ enum ProxyType
     Snell,
     HTTP,
     HTTPS,
-    SOCKS5
+    SOCKS5,
+    WireGuard
 };
 
 inline String getProxyTypeName(int type)
@@ -40,6 +41,8 @@ inline String getProxyTypeName(int type)
         return "HTTPS";
     case ProxyType::SOCKS5:
         return "SOCKS5";
+    case ProxyType::WireGuard:
+        return "WireGuard";
     default:
         return "Unknown";
     }
@@ -82,6 +85,11 @@ struct Proxy
     tribool AllowInsecure;
     tribool TLS13;
 
+    String PricateKey;
+    String PublicKey;
+    String IP;
+    std::vector<String> DNS;
+
     uint16_t SnellVersion = 0;
     String ServerName;
 };
@@ -93,5 +101,6 @@ struct Proxy
 #define HTTP_DEFAULT_GROUP "HTTPProvider"
 #define TROJAN_DEFAULT_GROUP "TrojanProvider"
 #define SNELL_DEFAULT_GROUP "SnellProvider"
+#define WIREGUARD_DEFAULT_GROUP "WireGuardProvider"
 
 #endif // PROXY_H_INCLUDED

@@ -437,6 +437,16 @@ void proxyToClash(std::vector<Proxy> &nodes, YAML::Node &yamlnode, const ProxyGr
             if(std::all_of(x.Password.begin(), x.Password.end(), ::isdigit) && !x.Password.empty())
                 singleproxy["password"].SetTag("str");
             break;
+        case ProxyType::WireGuard:
+            singleproxy["type"] = "wireguard";
+            singleproxy["ip"] = x.IP;
+            singleproxy["private-key"] = x.PricateKey;
+            singleproxy["public-key"] = x.PublicKey;
+            if(!x.DNS.empty())
+            {
+                singleproxy["dns"] = x.DNS;
+            }
+            break;
         default:
             continue;
         }

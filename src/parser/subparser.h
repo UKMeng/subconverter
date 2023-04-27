@@ -27,6 +27,7 @@ void socksConstruct(Proxy &node, const std::string &group, const std::string &re
 void httpConstruct(Proxy &node, const std::string &group, const std::string &remarks, const std::string &server, const std::string &port, const std::string &username, const std::string &password, bool tls, tribool tfo = tribool(), tribool scv = tribool(), tribool tls13 = tribool());
 void trojanConstruct(Proxy &node, const std::string &group, const std::string &remarks, const std::string &server, const std::string &port, const std::string &password, const std::string &network, const std::string &host, const std::string &path, bool tlssecure, tribool udp = tribool(), tribool tfo = tribool(), tribool scv = tribool(), tribool tls13 = tribool());
 void snellConstruct(Proxy &node, const std::string &group, const std::string &remarks, const std::string &server, const std::string &port, const std::string &password, const std::string &obfs, const std::string &host, uint16_t version = 0, tribool udp = tribool(), tribool tfo = tribool(), tribool scv = tribool());
+void wireguardConstruct(Proxy &node, const std::string &group, const std::string &remarks, const std::string &server, const std::string &port, const std::string &ip, const std::string &private_key, const std::string &public_key, const std::vector<std::string> &dns, tribool udp, tribool tfo, tribool scv);
 void explodeVmess(std::string vmess, Proxy &node);
 void explodeSSR(std::string ssr, Proxy &node);
 void explodeSS(std::string ss, Proxy &node);

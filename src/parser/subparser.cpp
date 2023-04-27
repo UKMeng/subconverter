@@ -115,6 +115,15 @@ void snellConstruct(Proxy &node, const std::string &group, const std::string &re
     node.SnellVersion = version;
 }
 
+void wireguardConstruct(Proxy &node, const std::string &group, const std::string &remarks, const std::string &server, const std::string &port, const std::string &ip, const std::string &private_key, const std::string &public_key, const std::vector<std::string> &dns, tribool udp, tribool tfo, tribool scv)
+{
+    commonConstruct(node, ProxyType::WireGuard, group, remarks, server, port, udp, tfo, scv, tribool());
+    node.IP = ip;
+    node.PublicKey = public_key;
+    node.PricateKey = private_key;
+    node.DNS = dns;
+}
+
 void explodeVmess(std::string vmess, Proxy &node)
 {
     std::string version, ps, add, port, type, id, aid, net, path, host, tls, sni;
@@ -944,6 +953,8 @@ void explodeClash(Node yamlnode, std::vector<Proxy> &nodes)
     std::string plugin, pluginopts, pluginopts_mode, pluginopts_host, pluginopts_mux; //ss
     std::string protocol, protoparam, obfs, obfsparam; //ssr
     std::string user; //socks
+    std::string ip, private_key, public_key; //wireguard
+    std::vector<std::string> dns; // wireguard
     tribool udp, tfo, scv;
     Node singleproxy;
     uint32_t index = nodes.size();
@@ -1141,6 +1152,15 @@ void explodeClash(Node yamlnode, std::vector<Proxy> &nodes)
             singleproxy["version"] >>= aid;
 
             snellConstruct(node, group, ps, server, port, password, obfs, host, to_int(aid, 0), udp, tfo, scv);
+            break;
+        case "wireguard"_hash:
+            group = WIREGUARD_DEFAULT_GROUP;
+            singleproxy["ip"] >>= ip;
+            singleproxy["private-key"] >>= private_key;
+            singleproxy["public-key"] >>= public_key;
+            singleproxy["dns"] >>= dns;
+
+            wireguardConstruct(node, group, ps, server, port, ip, private_key, public_key, dns, udp, tfo, scv);
             break;
         default:
             continue;
